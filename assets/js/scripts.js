@@ -18,6 +18,15 @@ function getWeatherApi() {
   // fetch request gets all the information on the 5 day forecast
   cityName = cityNameInput.value;
   console.log("City " + cityName);
+  var data = JSON.parse(localStorage.getItem("data")) || []
+  var dataEntry = {
+    city: cityName,
+  };
+  data.push(dataEntry);
+  // save to local storge
+  localStorage.setItem("data", JSON.stringify(data))
+  localStorage.setItem("cities", JSON.stringify(cityName));
+  console.log(scheduledEvents);
   //Use the ` to set the search values that are from the form
   var requestUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
