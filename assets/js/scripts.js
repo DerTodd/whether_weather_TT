@@ -67,22 +67,19 @@ function getWeatherAPIwithLoc() {
             "UV-index" : data2.current.uvi
         };
         console.log(dailyW);
-        getFiveDay();
+        getFiveDay1();
     })
   };
 
-  function getFiveDay() { 
+  function getFiveDay1() { 
     var requestSecondUrl =`https://api.openweathermap.org/data/2.5/onecall?lat=${locationW.lat}&lon=${locationW.lon}&exclude={part}&appid=${apiKey}`
     fetch(requestSecondUrl)
     .then(function (response2) {
         return response2.json();
       })
     .then(function (data3) {
-      for (let i = 0; i < 1; i++) {
-        //const element = array[i];
-        //daily[i].
       
-        var date = (moment.unix(data3.daily[0].dt).format("MM/DD/YYYY"));
+        var date = (moment.unix(data3.daily[1].dt).format("MM/DD/YYYY"));
         console.log(data3);
         console.log(locationW);
         console.log("two lon" + locationW.lon);
@@ -90,41 +87,187 @@ function getWeatherAPIwithLoc() {
         //alert(moment.unix(data3.daily[0].dt).format("MM/DD/YYYY"))
         console.log("current temp " + data3.daily[0].temp.max);
         console.log(cityName);
-        var todayTemp = ((data3.daily[0].temp.max)- 273.15) * 9 / 5 + 32
+        var todayTemp = ((data3.daily[1].temp.max)- 273.15) * 9 / 5 + 32
         //convert stupid Kelvin to what it was intended to be fahrenheit
         var todaysTemp = todayTemp.toFixed(0);
         //limit it so it isn't a ridiculous number
         console.log("Temperature " + todaysTemp)
-        
         dailyW = {
             "animals" : "Turtles",
             "date" : date,
-            "icon" : data3.daily[0].weather[0].icon,
+            "icon" : data3.daily[1].weather[0].icon,
             "temperature" : todaysTemp,
-            "wind" : data3.daily[0].wind_speed,
-            "humidity" : data3.daily[0].humidity,
-            "UV-index" : data3.daily[0].uvi
+            "wind" : data3.daily[1].wind_speed,
+            "humidity" : data3.daily[1].humidity,
+            "UV-index" : data3.daily[1].uvi
         };
         var futureInfo = "http://openweathermap.org/img/wn/" + dailyW.icon + ".png";
         console.log(futureInfo);
-        i++
         console.log(dailyW.date);
-        document.getElementById("date1").textContent = dailyW.date;
+        document.getElementById("dat1").textContent = dailyW.date;
         //document.getElementById("#icon1").img.src = futureInfo;
-        document.getElementById("temperature1").textContent = "High: " + dailyW.temperature + String.fromCharCode(176) + "F";
-        document.getElementById("wind1").textContent = "Wind: " + dailyW.wind;
-        document.getElementById("humidity1").textContent = "Humidity: " + dailyW.humidity;
+        document.getElementById("temp1").textContent = "High: " + dailyW.temperature + String.fromCharCode(176) + "F";
+        document.getElementById("win1").textContent = "Wind: " + dailyW.wind;
+        document.getElementById("humid1").textContent = "Humidity: " + dailyW.humidity;
         //icon from https://www.geeksforgeeks.org/how-to-create-an-image-element-dynamically-using-javascript/
         var img = document.createElement('img');
             img.src = futureInfo;
             document.getElementById('icon1').appendChild(img);
             //down.innerHTML = "Image Element Added.";
 
-      }
-    });return locationW, cityName;
+      
+    });getFiveDay2();
     
 }
-
+function getFiveDay2() { 
+  var requestSecondUrl =`https://api.openweathermap.org/data/2.5/onecall?lat=${locationW.lat}&lon=${locationW.lon}&exclude={part}&appid=${apiKey}`
+  fetch(requestSecondUrl)
+  .then(function (response3) {
+      return response3.json();
+    })
+  .then(function (data4) {
+    
+      var date = (moment.unix(data4.daily[2].dt).format("MM/DD/YYYY"));
+      var todayTemp = ((data4.daily[2].temp.max)- 273.15) * 9 / 5 + 3;
+      var todaysTemp = todayTemp.toFixed(0);
+      dailyW = {
+          "date" : date,
+          "icon" : data4.daily[2].weather[0].icon,
+          "temperature" : todaysTemp,
+          "wind" : data4.daily[2].wind_speed,
+          "humidity" : data4.daily[2].humidity,
+      };
+      var futureInfo = "http://openweathermap.org/img/wn/" + dailyW.icon + ".png";
+      document.getElementById("dat2").textContent = dailyW.date;
+      document.getElementById("temp2").textContent = "High: " + dailyW.temperature + String.fromCharCode(176) + "F";
+      document.getElementById("win2").textContent = "Wind: " + dailyW.wind;
+      document.getElementById("humid2").textContent = "Humidity: " + dailyW.humidity;
+      var img = document.createElement('img');
+          img.src = futureInfo;
+          document.getElementById('icon2').appendChild(img);    
+  });getFiveDay3();
+  
+}
+function getFiveDay3() { 
+  var requestSecondUrl =`https://api.openweathermap.org/data/2.5/onecall?lat=${locationW.lat}&lon=${locationW.lon}&exclude={part}&appid=${apiKey}`
+  fetch(requestSecondUrl)
+  .then(function (response4) {
+      return response4.json();
+    })
+  .then(function (data5) {
+    
+      var date = (moment.unix(data5.daily[3].dt).format("MM/DD/YYYY"));
+      var todayTemp = ((data5.daily[3].temp.max)- 273.15) * 9 / 5 + 3;
+      var todaysTemp = todayTemp.toFixed(0);
+      dailyW = {
+          "date" : date,
+          "icon" : data5.daily[3].weather[0].icon,
+          "temperature" : todaysTemp,
+          "wind" : data5.daily[3].wind_speed,
+          "humidity" : data5.daily[3].humidity,
+      };
+      var futureInfo = "http://openweathermap.org/img/wn/" + dailyW.icon + ".png";
+      document.getElementById("dat3").textContent = dailyW.date;
+      document.getElementById("temp3").textContent = "High: " + dailyW.temperature + String.fromCharCode(176) + "F";
+      document.getElementById("win3").textContent = "Wind: " + dailyW.wind;
+      document.getElementById("humid3").textContent = "Humidity: " + dailyW.humidity;
+      var img = document.createElement('img');
+          img.src = futureInfo;
+          document.getElementById('icon3').appendChild(img);    
+  });getFiveDay4();
+  
+}
+function getFiveDay4() { 
+  var requestSecondUrl =`https://api.openweathermap.org/data/2.5/onecall?lat=${locationW.lat}&lon=${locationW.lon}&exclude={part}&appid=${apiKey}`
+  fetch(requestSecondUrl)
+  .then(function (response5) {
+      return response5.json();
+    })
+  .then(function (data6) {
+    
+      var date = (moment.unix(data6.daily[4].dt).format("MM/DD/YYYY"));
+      var todayTemp = ((data6.daily[4].temp.max)- 273.15) * 9 / 5 + 3;
+      var todaysTemp = todayTemp.toFixed(0);
+      dailyW = {
+          "date" : date,
+          "icon" : data6.daily[4].weather[0].icon,
+          "temperature" : todaysTemp,
+          "wind" : data6.daily[4].wind_speed,
+          "humidity" : data6.daily[4].humidity,
+      };
+      var futureInfo = "http://openweathermap.org/img/wn/" + dailyW.icon + ".png";
+      document.getElementById("dat4").textContent = dailyW.date;
+      document.getElementById("temp4").textContent = "High: " + dailyW.temperature + String.fromCharCode(176) + "F";
+      document.getElementById("win4").textContent = "Wind: " + dailyW.wind;
+      document.getElementById("humid4").textContent = "Humidity: " + dailyW.humidity;
+      var img = document.createElement('img');
+          img.src = futureInfo;
+          document.getElementById('icon4').appendChild(img);    
+  });getFiveDay5();
+  
+}
+function getFiveDay5() { 
+  var requestSecondUrl =`https://api.openweathermap.org/data/2.5/onecall?lat=${locationW.lat}&lon=${locationW.lon}&exclude={part}&appid=${apiKey}`
+  fetch(requestSecondUrl)
+  .then(function (response6) {
+      return response6.json();
+    })
+  .then(function (data7) {
+    
+      var date = (moment.unix(data7.daily[5].dt).format("MM/DD/YYYY"));
+      var todayTemp = ((data7.daily[5].temp.max)- 273.15) * 9 / 5 + 3;
+      var todaysTemp = todayTemp.toFixed(0);
+      dailyW = {
+          "date" : date,
+          "icon" : data7.daily[5].weather[0].icon,
+          "temperature" : todaysTemp,
+          "wind" : data7.daily[5].wind_speed,
+          "humidity" : data7.daily[5].humidity,
+      };
+      var futureInfo = "http://openweathermap.org/img/wn/" + dailyW.icon + ".png";
+      document.getElementById("dat5").textContent = dailyW.date;
+      document.getElementById("temp5").textContent = "High: " + dailyW.temperature + String.fromCharCode(176) + "F";
+      document.getElementById("win5").textContent = "Wind: " + dailyW.wind;
+      document.getElementById("humid5").textContent = "Humidity: " + dailyW.humidity;
+      var img = document.createElement('img');
+          img.src = futureInfo;
+          document.getElementById('icon5').appendChild(img);    
+  });getPrimaryDay();
+  
+}
+function getPrimaryDay() { 
+  var requestSecondUrl =`https://api.openweathermap.org/data/2.5/onecall?lat=${locationW.lat}&lon=${locationW.lon}&exclude={part}&appid=${apiKey}`
+  fetch(requestSecondUrl)
+  .then(function (response7) {
+      return response7.json();
+    })
+  .then(function (data8) {
+    
+      var date = (moment.unix(data8.daily[0].dt).format("MM/DD/YYYY"));
+      var todayTemp = ((data8.daily[0].temp.max)- 273.15) * 9 / 5 + 3;
+      var todaysTemp = todayTemp.toFixed(0);
+      dailyW = {
+          "date" : date,
+          "icon" : data8.daily[0].weather[0].icon,
+          "temperature" : todaysTemp,
+          "wind" : data8.daily[0].wind_speed,
+          "humidity" : data8.daily[0].humidity,
+          "city" : cityName,
+          "UVindex" : data8.current.uvi
+      };
+      var futureInfo = "http://openweathermap.org/img/wn/" + dailyW.icon + ".png";
+      document.getElementById("city").textContent = dailyW.city;
+      document.getElementById("datP").textContent = dailyW.date;
+      document.getElementById("tempP").textContent = "High: " + dailyW.temperature + String.fromCharCode(176) + "F";
+      document.getElementById("winP").textContent = "Wind: " + dailyW.wind;
+      document.getElementById("humidP").textContent = "Humidity: " + dailyW.humidity;
+      document.getElementById("UV-1").textContent = "UV-Index: " + dailyW.UVindex;
+      var img = document.createElement('img');
+          img.src = futureInfo;
+          document.getElementById('iconP').appendChild(img);    
+  });
+  
+}
 findIt.addEventListener('click', getWeatherApi);
 
 var apiKey = "da319c80a92981c05924a706c9b206b6"
