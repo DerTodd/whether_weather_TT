@@ -16,9 +16,9 @@ var future5;
 
 function getWeatherApi() {
   // fetch request gets all the information on the 5 day forecast
-  cityName = cityNameInput.value;
+  cityName = cityNameInput.value.trim();
   console.log("City " + cityName);
-  var data = JSON.parse(localStorage.getItem("data")) || []
+  var data = JSON.parse(localStorage.getItem("data")) || [];
   var dataEntry = {
     city: cityName,
   };
@@ -26,7 +26,7 @@ function getWeatherApi() {
   // save to local storge
   localStorage.setItem("data", JSON.stringify(data))
   localStorage.setItem("cities", JSON.stringify(cityName));
-  console.log(scheduledEvents);
+  console.log(cityName);
   //Use the ` to set the search values that are from the form
   var requestUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 
@@ -65,6 +65,7 @@ function getWeatherAPIwithLoc() {
         var todaysTemp = todayTemp.toFixed(0);
         //limit it so it isn't a ridiculous number
         console.log("Temperature " + todaysTemp)
+        var index = data2.current.uvi
         dailyW = {
             "animals" : "Frog",
             "city" : cityName,
@@ -76,6 +77,21 @@ function getWeatherAPIwithLoc() {
             "UV-index" : data2.current.uvi
         };
         console.log(dailyW);
+        if(index < 3){
+          document.getElementById("UV-1").style.backgroundColor = "green";
+        };
+        if(index >= 3 && index < 6){
+          document.getElementById("UV-1").style.backgroundColor = "Yellow";
+        };
+        if(index >= 6 && index < 8){
+          document.getElementById("UV-1").style.backgroundColor = "orange";
+        };
+        if(index >= 8 && index < 11){
+          document.getElementById("UV-1").style.backgroundColor = "red";
+        };
+        if(index >= 11){
+          document.getElementById("UV-1").style.backgroundColor = "purple";
+        };
         getFiveDay1();
     })
   };
@@ -278,6 +294,34 @@ function getPrimaryDay() {
   
 }
 findIt.addEventListener('click', getWeatherApi);
+
+
+function renderScheduledEvents() {
+  // Use JSON.parse() to convert text to JavaScript object
+  var carryOverEvents = JSON.parse(localStorage.getItem("scheduledEvents"));
+  console.log(carryOverEvents);
+  // Check to see if there is data in the varable.  If there is, contine onward!
+  if (carryOverEvents !== null) {
+    document.getElementById("events9").textContent = carryOverEvents.events9;
+    document.getElementById("events10").textContent = carryOverEvents.events10;
+    document.getElementById("events11").textContent = carryOverEvents.events11;
+    document.getElementById("events12").textContent = carryOverEvents.events12;
+    document.getElementById("events1").textContent = carryOverEvents.events1;
+    document.getElementById("events2").textContent = carryOverEvents.events2;
+    document.getElementById("events3").textContent = carryOverEvents.events3;
+    document.getElementById("events4").textContent = carryOverEvents.events4;
+    document.getElementById("events5").textContent = carryOverEvents.events5;
+  } else {
+    return;
+  }
+}
+function init() {
+  // When the init function is executed, the code inside renderLastGrade function will also execute
+  renderScheduledEvents();
+  console.log(currentHour);
+  changeColors();
+}
+init();
 
 var apiKey = "da319c80a92981c05924a706c9b206b6"
 //api.openweathermap.org/data/2.5/weather?q={city name}&appid=da319c80a92981c05924a706c9b206b6

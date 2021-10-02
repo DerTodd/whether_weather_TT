@@ -1,0 +1,80 @@
+.blue{
+    background-color:#9177F2
+}
+.cursive{
+    font-family: 'Ephesis', cursive;
+}
+
+
+
+/*Code from Kevin Powell's YouTube  "Flexbox design patterns you can use in your project.+ */
+/* https://www.youtube.com/watch?v=vQAvjof1oe4 */
+
+.even-columns {
+    display: flex;
+}
+
+.even-columns > * {
+    flex-basis: 95%;
+    gap: 1em;
+}
+
+.cols {
+    border: 2px solid black;
+}
+.grid-ish {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+.grid-ish > * {
+    /*flex grow, flex shrink, flex basis, grow default is 0 which is don't grow */
+    flex: 1 1 10em;
+}
+.content-sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+.sidebar {
+    flex: 1 1 30%;
+    max-width: 20%;
+    /* min-width and max-width can be added as well */
+}
+.maintext {
+    flex: 1 1 60%;
+    max-width: 78%;
+}
+button {
+    max-width: 25%;
+    border-radius: 5%;
+    box-shadow: 5 5 5 gray;
+    background-color: #9177F2;
+}
+
+/* fancy way to select items 
+.class > *:nth-child(1) first child after the parent class
+.class > *:nth-child(2) second child after the parent class
+grow shrink 70% */
+
+
+
+
+
+
+
+
+/* Extra small devices (portrait phones, less than 576px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+/* Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... } */
