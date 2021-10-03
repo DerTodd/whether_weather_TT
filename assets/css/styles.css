@@ -1,8 +1,9 @@
 .blue{
-    background-color:#9177F2
+    background-image:radial-gradient(#F057F2, #9177F2, #5550F2)
 }
 .cursive{
     font-family: 'Ephesis', cursive;
+    text-align: center;
 }
 
 
@@ -20,7 +21,9 @@
 }
 
 .cols {
-    border: 2px solid black;
+    border: none;
+    
+    
 }
 .grid-ish {
     display: flex;
@@ -39,17 +42,37 @@
 .sidebar {
     flex: 1 1 30%;
     max-width: 20%;
+    margin-left: 1em;
     /* min-width and max-width can be added as well */
 }
 .maintext {
     flex: 1 1 60%;
-    max-width: 78%;
+    max-width: 76%;
+    margin-left: 1em;
+    display: none;
 }
 button {
-    max-width: 25%;
-    border-radius: 5%;
+    width: 75%;
+    border-radius: 10%;
     box-shadow: 5 5 5 gray;
     background-color: #9177F2;
+    padding: 0 1em 0 1em;
+    text-align: center;
+}
+#searched{
+    flex-direction: column;
+}
+#UV-1{
+    max-width: 15%;
+}
+body {
+    background-image: linear-gradient(45deg, #F057F2, #05F2F2);
+}
+/*Color for the cards*/
+.clr {
+    background-color:rgb(196, 189, 189);
+    padding-left: 2em;
+    padding-right: 2em;
 }
 
 /* fancy way to select items 
