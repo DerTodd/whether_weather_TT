@@ -36,7 +36,7 @@ function getWeatherApi() {
   //Added to resolve an error
   var town = cityName;
   //Use the ` to set the search values that are from the form
-  var requestUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
+  var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
 //fetch finally ran and needed data grabbed from it. lat and long sent to api to get all the weather information
   fetch(requestUrl)
     .then(function (response) {
@@ -73,7 +73,7 @@ function secondTimeAround(oldCityName) {
   // console.log(cityName);
   //Use the ` to set the search values that are from past searched using the input from the init
   cityName = oldCityName;
-  var requestUrl2 = `http://api.openweathermap.org/data/2.5/weather?q=${oldCityName}&units=imperial&appid=${apiKey}`;
+  var requestUrl2 = `https://api.openweathermap.org/data/2.5/weather?q=${oldCityName}&units=imperial&appid=${apiKey}`;
 
   fetch(requestUrl2)
     .then(function (response) {
