@@ -5,9 +5,9 @@
 
 
 ### Beautiful images
-![Planner](./assets/images/planner_site.jpg)
+![Planner](./assets/images/webpage.jpg)
 ### The Pages of Destiny
-the webpage (https://dertodd.github.io/Daily_Planner_TT/) and the gitHub (https://github.com/DerTodd/Daily_Planner_TT)
+the webpage (https://dertodd.github.io/whether_weather_TT/) and the gitHub (https://github.com/DerTodd/whether_weather_TT)
 
 GIVEN a weather dashboard with form inputs
 WHEN I search for a city
