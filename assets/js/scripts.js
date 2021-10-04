@@ -17,10 +17,13 @@ var future5;
 
 function getWeatherApi() {
   // Fetch request to get the lat and long of the city we want to show
-  
+  //Attempt to prevent the program from running if the cityName had information.  
+  //It needs null added as well, but produces an error
   if(cityName === ""){
+  //get the input from the website and assign it it cityName
   cityName = cityNameInput.value.trim()};
   console.log("City " + cityName);
+  //retrieve any stored items from local storage and assign to data create new variable and add it to anything already there
   var data = JSON.parse(localStorage.getItem("data")) || [];
   var dataEntry = {
     city: cityName,
@@ -30,10 +33,11 @@ function getWeatherApi() {
   localStorage.setItem("data", JSON.stringify(data))
   localStorage.setItem("cities", JSON.stringify(cityName));
   console.log(cityName);
+  //Added to resolve an error
   var town = cityName;
   //Use the ` to set the search values that are from the form
   var requestUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
-
+//fetch finally ran and needed data grabbed from it. lat and long sent to api to get all the weather information
   fetch(requestUrl)
     .then(function (response) {
       return response.json();
@@ -45,6 +49,7 @@ function getWeatherApi() {
       "lat" : data.coord.lat,
         };
      console.log(locationW);
+     //Set the name of the city the user requested
      document.getElementsByClassName("title").textContent = town;
      getWeatherAPIwithLoc();
     });return locationW, cityName;
@@ -53,7 +58,7 @@ function getWeatherApi() {
 function secondTimeAround(oldCityName) {
   
   // fetch request gets all the information for the weather for the city we have stored.
-  
+  //copy of first function that pulls from stored data instead of user input
   // if(cityName === ""){
   // cityName = cityNameInput.value.trim()};
   // console.log("City " + cityName);
@@ -66,7 +71,7 @@ function secondTimeAround(oldCityName) {
   // localStorage.setItem("data", JSON.stringify(data))
   // localStorage.setItem("cities", JSON.stringify(cityName));
   // console.log(cityName);
-  //Use the ` to set the search values that are from the form
+  //Use the ` to set the search values that are from past searched using the input from the init
   cityName = oldCityName;
   var requestUrl2 = `http://api.openweathermap.org/data/2.5/weather?q=${oldCityName}&units=imperial&appid=${apiKey}`;
 
@@ -87,14 +92,18 @@ function secondTimeAround(oldCityName) {
     
 }
 function getWeatherAPIwithLoc() { 
+  //APT request with lon and lat so we get all the information that we need about the city.
     var requestSecondUrl =`https://api.openweathermap.org/data/2.5/onecall?lat=${locationW.lat}&lon=${locationW.lon}&units=imperial&exclude={part}&appid=${apiKey}`
     fetch(requestSecondUrl)
     .then(function (response2) {
         return response2.json();
       })
       .then(function (data2) {
+        //The then function carries that data from the api and allows ust to grab the needed information
         var todaysDate = (moment.unix(data2.current.dt).format("MM/DD/YYYY"));
+        //logs to make sure everything works
         console.log(data2);
+        //reveal the hidden areas
         document.getElementById("showMe").style.display = "inline";
         console.log(locationW);
         console.log("two lon" + locationW.lon);
@@ -107,7 +116,7 @@ function getWeatherAPIwithLoc() {
         //convert stupid Kelvin to what it was intended to be fahrenheit
         //var todaysTemp = todayTemp.toFixed(0);
         //limit it so it isn't a ridiculous number
-        
+        //tests to make sure everything is working.  The actual writing of data was moved out of this function.
         console.log("Temperature " + data2.current.temp)
         var index = data2.current.uvi
         dailyW = {
@@ -120,6 +129,7 @@ function getWeatherAPIwithLoc() {
             "humidity" : data2.current.humidity,
             "UV-index" : data2.current.uvi
         };
+        //setting up the different styles for the uv index.
         document.getElementById("city").textContent = dailyW.city;
         console.log(dailyW);
         if(index < 3){
@@ -150,7 +160,7 @@ function getWeatherAPIwithLoc() {
         return response2.json();
       })
     .then(function (data3) {
-      
+        //set the date information using moment to change the supplied unix value
         var date = (moment.unix(data3.daily[1].dt).format("dddd MMM Do"));
         
         console.log(data3);
@@ -161,9 +171,9 @@ function getWeatherAPIwithLoc() {
         console.log("current temp " + data3.daily[1].temp.max);
         console.log(cityName);
         //var todayTemp = ((data3.daily[1].temp.max)- 273.15) * 9 / 5 + 32
-        //convert stupid Kelvin to what it was intended to be fahrenheit
+        //changed to different fetch so this is no longer needed
         //var todaysTemp = todayTemp.toFixed(0);
-        //limit it so it isn't a ridiculous number
+        //set the values that will be used for the weather
         console.log("Temperature " + data3.daily[1].temp.max)
         dailyW = {
             "animals" : "Turtles",
@@ -174,13 +184,18 @@ function getWeatherAPIwithLoc() {
             "humidity" : data3.daily[1].humidity,
             "UV-index" : data3.daily[1].uvi
         };
+        //Set the value for the icon using the supplied information from the api
         var futureInfo = "http://openweathermap.org/img/wn/" + dailyW.icon + ".png";
         console.log(futureInfo);
         console.log(dailyW.date);
+        //set the date
         document.getElementById("dat1").textContent = dailyW.date;
         //document.getElementById("#icon1").img.src = futureInfo;
+        //use fromCharCode to render the correct degree sign for the display
         document.getElementById("temp1").textContent = "High: " + dailyW.temperature + String.fromCharCode(176) + "F";
+        //set the wind
         document.getElementById("win1").textContent = "Wind: " + dailyW.wind;
+        //set the humidity
         document.getElementById("humid1").textContent = "Humidity: " + dailyW.humidity;
         //icon from https://www.geeksforgeeks.org/how-to-create-an-image-element-dynamically-using-javascript/
         var img = document.createElement('img');
@@ -194,7 +209,7 @@ function getWeatherAPIwithLoc() {
     
 }
 function getFiveDay2() { 
-  //This gets the information for the second day.
+  //This gets the information for the second day. Most is just reapeated from day 1
   var requestSecondUrl =`https://api.openweathermap.org/data/2.5/onecall?lat=${locationW.lat}&lon=${locationW.lon}&units=imperial&exclude={part}&appid=${apiKey}`
   fetch(requestSecondUrl)
   .then(function (response3) {
@@ -348,7 +363,8 @@ function getPrimaryDay() {
           document.getElementById('iconP').appendChild(img);    
   });
   
-}
+};
+//set the event listener to the button with the id "findIt"
 findIt.addEventListener('click', getWeatherApi);
 
 
@@ -356,6 +372,7 @@ function renderSearchedCities() {
   // Use JSON.parse() to convert text to JavaScript object
   var searchedCities = JSON.parse(localStorage.getItem("data"));
   console.log(searchedCities);
+  //intended to fix the error of null when site is first created, but produced more errors.  Needed null and undefined added as well
   if(searchedCities !== ""){
   for(var i = 0; i < searchedCities.length; i++){
   var part1= searchedCities[i].city;
@@ -399,7 +416,7 @@ newButton.addEventListener ("click", function() {
 //   alert(part1);
 //}
 function myFunction(el) {
-  //alert (el.id);
+  //alert (el.id); used to get the information off the button and pass it to the second time fuction
   var oldCityName = el.id;
   console.log(oldCityName)
   secondTimeAround(oldCityName);
@@ -432,7 +449,7 @@ function myFunction(el) {
       //document.step1.textContent(pastCity);
 
     
-
+//run and load the past city searches.
 function init() {
   // When the init function is executed, the code inside renderLastGrade function will also execute
   renderSearchedCities();
