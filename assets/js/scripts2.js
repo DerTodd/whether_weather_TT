@@ -19,9 +19,11 @@ function getWeatherApi() {
   // Fetch request to get the lat and long of the city we want to show
   //Attempt to prevent the program from running if the cityName had information.  
   //It needs null added as well, but produces an error
-  if(cityName === ""){
+  console.log(cityName);
+  console.log(cityNameInput.value);
+  //if(cityName === "" || cityName === cityNameInput.value){
   //get the input from the website and assign it it cityName
-  cityName = cityNameInput.value.trim()};
+  cityName = cityNameInput.value.trim();
   console.log("City " + cityName);
   //retrieve any stored items from local storage and assign to data create new variable and add it to anything already there
   var data = JSON.parse(localStorage.getItem("data")) || [];
@@ -336,6 +338,8 @@ function getFiveDay5() {
   
 }
 function getPrimaryDay() { 
+    clearDiv('searched')
+    renderSearchedCities()
   //This is the information for the current day
   var requestSecondUrl =`https://api.openweathermap.org/data/2.5/onecall?lat=${locationW.lat}&lon=${locationW.lon}&units=imperial&exclude={part}&appid=${apiKey}`
   fetch(requestSecondUrl)
@@ -372,109 +376,122 @@ function getPrimaryDay() {
   
 };
 //set the event listener to the button with the id "findIt"
-findIt.addEventListener('click', getWeatherApi);
-
-
-function renderSearchedCities() {
-  // Use JSON.parse() to convert text to JavaScript object
-  var searchedCities = JSON.parse(localStorage.getItem("data"));
-  console.log(searchedCities);
-  //intended to fix the error of null when site is first created, but produced more errors.  Needed null and undefined added as well
-  if(searchedCities !== ""){
-  for(var i = 0; i < searchedCities.length; i++){
-  var part1= searchedCities[i].city;
-  console.log(part1);
-  // button inspired by https://learntocodetogether.com/create-and-styling-a-button-with-javascript-html-css-step-by-step-2019/
-  var newButton = document.createElement("button");
-  newButton.id = part1;
-  newButton.class = "stupidTrash saveButton"
-  newButton.name = part1;
-  newButton.textContent = part1;
-  document.getElementById("searched").appendChild(newButton);
-  //getElementById("Austin").addEventListener("click",getWeatherApi(cityName))
-// 1. Create the button
-//var button = document.createElement("button");
-//button.innerHTML = "Do Something";
-
-// 2. Append somewhere
-//https://codepen.io/davidcochran/pen/WbWXoa David Cochran
-var ul = document.getElementsByTagName("ul")[0];
-ul.appendChild(newButton);
-
-// 3. Add event handler
-newButton.addEventListener ("click", function() {
-  //alert("Still working"); 
-  
-
-
-    myFunction(this);
+findIt.addEventListener('click', function(event) {
+    //alert("Button Triggered" + event);
+    getWeatherApi();
 });
 
-  };
- //changeButtons();
-}
-}; 
-// function changeButtons(event) {
-//   console.log(event.target);
-//   var btnClicked = $(event.target);
-//   btnClicked.child('ul').sayHelloAgain();
-// }
-// function sayHelloAgain (part1){
-//   alert(part1);
-//}
-function myFunction(el) {
-  //alert (el.id); used to get the information off the button and pass it to the second time fuction
-  var oldCityName = el.id;
-  console.log(oldCityName)
-  secondTimeAround(oldCityName);
-  };
-// function changeButtons() {
-//   var row = document.querySelectorAll(".stupidTrash");
-// for (i = 0; i < row.length; i++) {
-//   var targetBtn = row[i].querySelector(".saveButton");
-//   targetBtn.addEventListener("click", function (event) {
-//       var id = event.target.closest("#searched").getAttribute("id");
-//       cityName = id;
-//        console.log(cityName);
-//        });
-
-// };};
-  
 
 
-  // Check to see if there is data in the varable.  If there is, contine onward!
-  //var i = 0;
-  //if (searchedCities !== null) {
-   
-    //for (var i = 0; i < data.length; i++) {
-      //var cities = document.createElement('button');
-      //var pastCity = data[i].value;
-      //issueTitle.textContent = data[i].name;
-      //document.getElementById("searched").append(cities);
-      //issuesContainer.append(repoTitle);
-      //var step1 = document.createElement("button");
-      //document.step1.textContent(pastCity);
-      function clearDiv(elementID) {
-        var ul = document.getElementById(elementID);
-        while(ul.firstChild) {
-            ul.removeChild(ul.firstChild);
-        }
+function renderSearchedCities()  {
+    data = JSON.parse(localStorage.getItem("data")) || [];
+    console.log(data);
+    var oldCities = [];
+    var searchedCities = data;
+    console.log(searchedCities)
+    var old_list =data[0].city;
+    console.log(old_list);
+    for (let index = 0; index < searchedCities.length ; index++) {
+        if(data[index].city !== undefined && data[index].city !== "") {
+        var old_search = data[index].city;
+        oldCities.push(old_search);
+        console.log(old_search);
+        console.log(oldCities);
     }
-    function clearBox(elementID) {
-      document.getElementById(elementID).textContent = "";
-      }
-    
-//run and load the past city searches.
-function init() {
-  // When the init function is executed, the code inside renderLastGrade function will also execute
-  renderSearchedCities();
+    };
+    //removed duplicates inspired by geeks for geeks https://www.geeksforgeeks.org/how-to-remove-duplicate-elements-from-array-in-javascript/
+    console.log(oldCities);
+    let unique_cities = [];
+    oldCities.forEach((c) => {
+        if (!unique_cities.includes(c)) {
+        unique_cities.push(c);
+        }
+    });
+    console.log(unique_cities);
+    for (let i = 0; i < unique_cities.length; i++) {
+        var newButtonsCities = unique_cities[i];
+        if(newButtonsCities !== null && newButtonsCities !== "" && newButtonsCities !== undefined)
+        //var newId = "citybutton" + i;
+        var part1= newButtonsCities;
+        console.log(part1)
+        //console.log(newId);
+        var cityBtn = document.createElement('button');
+            cityBtn.textContent = newButtonsCities;
+            cityBtn.type = "submit";
+            cityBtn.id = part1;
+            cityBtn.style.backgroundColor = "#D92929"
+            cityBtn.style.color ="White"
+            cityBtn.style.borderRadius = "12px"
+            cityBtn.style.padding ="20px"
+            cityBtn.style.margin =".5em"
+            cityBtn.style.border ="none"
+            cityBtn.style.font= "bold 1.25rem/1 montserrat";
+            cityBtn.style.color= "white";
+            document.getElementById('searched').appendChild(cityBtn); 
+            console.log(part1);
+            document.getElementById(part1).addEventListener("click", function(event) {
+            // alert("Hi, I'm a submit button! " + event.target.tagName);
+            myFunction(this)
+            
+            });
+        };
+    };
+
+
+function myFunction(el) {
+    //alert (el.id); used to get the information off the button and pass it to the second time fuction
+    var oldCityName = el.id;
+    console.log(oldCityName)
+    secondTimeAround(oldCityName);
+    };
+  // function changeButtons() {
+  //   var row = document.querySelectorAll(".stupidTrash");
+  // for (i = 0; i < row.length; i++) {
+  //   var targetBtn = row[i].querySelector(".saveButton");
+  //   targetBtn.addEventListener("click", function (event) {
+  //       var id = event.target.closest("#searched").getAttribute("id");
+  //       cityName = id;
+  //        console.log(cityName);
+  //        });
   
-}
-init();
-
-var apiKey = "da319c80a92981c05924a706c9b206b6"
-//api.openweathermap.org/data/2.5/weather?q={city name}&appid=da319c80a92981c05924a706c9b206b6
-//api.openweathermap.org/data/2.5/weather?q=Austin&appid=da319c80a92981c05924a706c9b206b6
-//https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
-//https://api.openweathermap.org/data/2.5/onecall?lat=30.2672&lon=-97.7431&exclude={part}&appid=da319c80a92981c05924a706c9b206b6
-
+  // };};
+    
+  
+  
+    // Check to see if there is data in the varable.  If there is, contine onward!
+    //var i = 0;
+    //if (searchedCities !== null) {
+     
+      //for (var i = 0; i < data.length; i++) {
+        //var cities = document.createElement('button');
+        //var pastCity = data[i].value;
+        //issueTitle.textContent = data[i].name;
+        //document.getElementById("searched").append(cities);
+        //issuesContainer.append(repoTitle);
+        //var step1 = document.createElement("button");
+        //document.step1.textContent(pastCity);
+        function clearDiv(elementID) {
+          var ul = document.getElementById(elementID);
+          while(ul.firstChild) {
+              ul.removeChild(ul.firstChild);
+          }
+      }
+      function clearBox(elementID) {
+        document.getElementById(elementID).textContent = "";
+        }
+      
+  //run and load the past city searches.
+  function init() {
+    // When the init function is executed, the code inside renderLastGrade function will also execute
+    renderSearchedCities();
+    
+  }
+  init();
+  
+  var apiKey = "da319c80a92981c05924a706c9b206b6"
+  //api.openweathermap.org/data/2.5/weather?q={city name}&appid=da319c80a92981c05924a706c9b206b6
+  //api.openweathermap.org/data/2.5/weather?q=Austin&appid=da319c80a92981c05924a706c9b206b6
+  //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
+  //https://api.openweathermap.org/data/2.5/onecall?lat=30.2672&lon=-97.7431&exclude={part}&appid=da319c80a92981c05924a706c9b206b6
+  
+  
